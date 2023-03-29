@@ -3,7 +3,7 @@ var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 
-var messages = [];
+// var messages = [];
 app.use(express.static("."));
 app.get('/', function (req, res) {
     res.redirect('index.html');
@@ -13,15 +13,15 @@ server.listen(3000, function () {
     console.log("server okay")
 });
 
-io.on('connection', function (socket) {
-    for (var i in messages) {
-        socket.emit("display message", messages[i]);
-    }
-    socket.on("send message", function (data) {
-        messages.push(data);
-        io.sockets.emit("display message", data);
-    });
-});
+// io.on('connection', function (socket) {
+//     for (var i in messages) {
+//         socket.emit("display message", messages[i]);
+//     }
+//     socket.on("send message", function (data) {
+//         messages.push(data);
+//         io.sockets.emit("display message", data);
+//     });
+// });
 
 function matrixGenerator(matrixSize, grass, grassEater, predator, mrjyun, agrav, mexu) {
     var matrix = []
@@ -87,7 +87,6 @@ function matrixGenerator(matrixSize, grass, grassEater, predator, mrjyun, agrav,
         var y = Math.floor(Math.random() * matrixSize)
 
         matrix[y][x] = 6
-
         return matrix
 
     }
@@ -102,7 +101,7 @@ grassEaterArr = []
 predatorArr = []
 mrjyunArr = []
 mexuArr = []
-
+agravArr = []
 const Grass = require("./grass")
 const GrassEater = require("./grassEater")
 const Predator = require("./predator")
@@ -157,6 +156,37 @@ function gameMove() {
         mexuArr[i].eat()
 
     }
+    for (let i in grassArr) {
+        grassArr[i].mul()
+    }
+
+    for (let i in grassEaterArr) {
+        grassEaterArr[i].eat()
+
+    }
+
+
+
+    for (let i in predatorArr) {
+        predatorArr[i].eat()
+    }
+    for (let i in mrjyunArr) {
+        mrjyunArr[i].eat()
+    }
+    for (let i in agravArr) {
+        agravArr[i].eat()
+
+    }
+    for (let i in mexuArr) {
+        mexuArr[i].eat()
+
+    }
+
+
+    io.emit("send matrix", matrix)
+
+  
+
 }
 
-setInterval(gameMove,1000)
+setInterval(gameMove, 1000)
