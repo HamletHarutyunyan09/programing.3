@@ -102,6 +102,7 @@ predatorArr = []
 mrjyunArr = []
 mexuArr = []
 agravArr = []
+
 const Grass = require("./grass")
 const GrassEater = require("./grassEater")
 const Predator = require("./predator")
@@ -185,7 +186,7 @@ function gameMove() {
 
     io.emit("send matrix", matrix)
 
-  
+
 
 }
 

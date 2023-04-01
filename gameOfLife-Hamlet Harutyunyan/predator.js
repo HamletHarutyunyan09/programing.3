@@ -6,7 +6,11 @@ module.exports = class Predator extends LivingCreature{
                 this.directions = []
       }
 
-
+      random(ch){
+        let found = this.chooseCell(ch);
+        let result = Math.floor(Math.random()*found.length)
+        return found[result];
+        }
       getNewCoordinates() {
         this.directions = [
             [this.x - 1, this.y - 1],
@@ -48,7 +52,7 @@ module.exports = class Predator extends LivingCreature{
 
     mul() {
        // let emptyCell = this.chooseCell(0);
-        //let newCell = random(emptyCell)
+        let newCell = this.random(0)
    
         if (newCell && this.energy > 5) {
             let newX = newCell[0];
@@ -104,8 +108,8 @@ module.exports = class Predator extends LivingCreature{
     }
 
     move() {
-        let emptyCell = this.chooseCell(0);
-        let newCell = random(emptyCell)
+        // let emptyCell = this.chooseCell(0);
+        let newCell = this.random(0)
 
         if (newCell) {
             let newX = newCell[0];
